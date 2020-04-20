@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Post;
+use App\Repository\PostRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,11 +16,15 @@ class PostController extends AbstractController
 {
     /**
      * @Route("/", name="index")
+     * @param PostRepository $postRepository
+     * @return Response
      */
-    public function index()
+    public function index(PostRepository $postRepository)
     {
+        $posts = $postRepository->findAll();
+        
         return $this->render('post/index.html.twig', [
-            'controller_name' => 'PostController',
+            'posts' => $posts,
         ]);
     }
 
@@ -32,17 +37,30 @@ class PostController extends AbstractController
     {
         // create a new post with title
         $post = new Post();
-
-        $post->setTitle('This is going to be a title');
+        $post->setTitle('Post Two');
 
         // entity manager
         $entitymanager = $this->getDoctrine()->getManager();
-
         $entitymanager->persist($post);
         $entitymanager->flush();
 
         // return a response
         return new Response('Post Was Created');
+    }
 
+    /**
+     * @Route("/{id}", name="show")
+     * @param Post $post
+     * @return Response
+     */
+    public function show(Post $post)
+    {
+        
+        // dd($post);
+
+        // create the show view
+        return $this->render('post/show.html.twig', [
+            'post' => $post,
+        ]);
     }
 }
