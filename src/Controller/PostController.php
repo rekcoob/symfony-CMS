@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Post;
+use App\Form\PostType;
 use App\Repository\PostRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -37,15 +38,24 @@ class PostController extends AbstractController
     {
         // create a new post with title
         $post = new Post();
-        $post->setTitle('Post Three');
+        
+        $form = $this->createForm(PostType::class, $post);
 
-        // entity manager
-        $entitymanager = $this->getDoctrine()->getManager();
-        $entitymanager->persist($post);
-        $entitymanager->flush();
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()) {
+            // entity manager
+            $entitymanager = $this->getDoctrine()->getManager();
+            $entitymanager->persist($post);
+            $entitymanager->flush(); 
+            
+            return $this->redirect($this->generateUrl('post.index'));
+        }
 
         // return a response
-        return $this->redirect($this->generateUrl('post.index'));
+        return $this->render('post/create.html.twig', [
+            'form' => $form->createView()
+        ]);
     }
 
     /**

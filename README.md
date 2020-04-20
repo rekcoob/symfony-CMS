@@ -26,3 +26,10 @@ php bin/console doctrine:schema:update --force
 
 php bin/console make:controller PostController
 // also makes twig folder and template
+
+php bin/console make // show make commands
+
+composer require form validator
+
+composer require symfony/profiler-pack // mb not need
+composer require symfony/profiler-pack --dev // for develop only
