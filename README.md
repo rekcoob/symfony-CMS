@@ -7,3 +7,6 @@ php bin/console
 composer require annotations
 
 php bin/console make:controller MainController
+
+symfony/var-dumper // doesnt need mb
+server // doesnt need mb
