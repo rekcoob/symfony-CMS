@@ -37,7 +37,7 @@ class PostController extends AbstractController
     {
         // create a new post with title
         $post = new Post();
-        $post->setTitle('Post Two');
+        $post->setTitle('Post Three');
 
         // entity manager
         $entitymanager = $this->getDoctrine()->getManager();
@@ -45,22 +45,35 @@ class PostController extends AbstractController
         $entitymanager->flush();
 
         // return a response
-        return new Response('Post Was Created');
+        return $this->redirect($this->generateUrl('post.index'));
     }
 
     /**
-     * @Route("/{id}", name="show")
+     * @Route("/show/{id}", name="show")
      * @param Post $post
      * @return Response
      */
     public function show(Post $post)
-    {
-        
-        // dd($post);
-
+    {  
         // create the show view
         return $this->render('post/show.html.twig', [
             'post' => $post,
         ]);
+    }
+
+    /**
+     * @Route("/delete/{id}", name="delete")
+     * @param Post $post
+     * @return Response
+     */
+    public function delete(Post $post)
+    {
+        // entity manager
+        $entitymanager = $this->getDoctrine()->getManager();
+        $entitymanager->remove($post);
+        $entitymanager->flush();   
+   
+        // create the show view
+        return $this->redirect($this->generateUrl('post.index'));
     }
 }
