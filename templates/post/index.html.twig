@@ -2,6 +2,12 @@
 
 {% block body %}
 
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+
     <h2>List Of All Posts</h2>
     <table class="table table-striped">
         <thead>

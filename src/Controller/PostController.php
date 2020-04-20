@@ -72,6 +72,8 @@ class PostController extends AbstractController
         $entitymanager = $this->getDoctrine()->getManager();
         $entitymanager->remove($post);
         $entitymanager->flush();   
+
+        $this->addFlash('success', 'Post was removed');
    
         // create the show view
         return $this->redirect($this->generateUrl('post.index'));
