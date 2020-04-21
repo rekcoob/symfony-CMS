@@ -33,3 +33,13 @@ composer require form validator
 
 composer require symfony/profiler-pack // mb not need
 composer require symfony/profiler-pack --dev // for develop only
+
+## Make authentification
+#make user entity
+composer require security
+
+#make auth
+php bin/console make:auth
+
+#make user // its better to make user instead of make entity. adds to packages
+php bin/console make:user  
