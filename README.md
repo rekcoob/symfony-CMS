@@ -32,7 +32,7 @@ php bin/console make // show make commands
 composer require form validator
 
 composer require symfony/profiler-pack // mb not need
-composer require symfony/profiler-pack --dev // for develop only
+composer require symfony/profiler-pack --dev // for develop only!!
 
 ## Make authentification
 #make user entity
@@ -43,3 +43,7 @@ php bin/console make:auth
 
 #make user // its better to make user instead of make entity. adds to packages
 php bin/console make:user  
+
+## Make User table in DB
+php bin/console doctrine:schema:update --dump-sql
+php bin/console doctrine:schema:update --force
