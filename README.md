@@ -49,3 +49,9 @@ php bin/console doctrine:schema:update --dump-sql
 php bin/console doctrine:schema:update --force
 
 @Repeated Type Field //for confirm password
+
+## Add Getters & Setters to Existing Entities
+php bin/console make:entity --regenerate
+
+#migrate
+php bin/console doctrine:schema:update --force
