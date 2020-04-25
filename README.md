@@ -55,3 +55,10 @@ php bin/console make:entity --regenerate
 
 #migrate
 php bin/console doctrine:schema:update --force
+
+## Create Category
+php bin/console make:entity Category
+
+php bin/console make:entity --regenerate
+
+php bin/console doctrine:schema:update --force
