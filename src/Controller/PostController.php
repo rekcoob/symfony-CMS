@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Entity\Post;
 use App\Form\PostType;
 use App\Repository\PostRepository;
-use App\Service\FileUploader;
+use App\Service\{ FileUploader, Notification };
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -34,9 +34,10 @@ class PostController extends AbstractController
      * @Route("/create", name="create")
      * @param Request $request
      * @param FileUploader $fileUploader
+     * @param Notification $notification
      * @return Response
      */
-    public function create(Request $request, FileUploader $fileUploader)
+    public function create(Request $request, FileUploader $fileUploader, Notification $notification)
     {
         // create a new post with title
         $post = new Post();
