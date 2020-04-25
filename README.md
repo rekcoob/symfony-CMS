@@ -62,3 +62,7 @@ php bin/console make:entity Category
 php bin/console make:entity --regenerate
 
 php bin/console doctrine:schema:update --force
+
+# Services
+php bin/console debug:container
+php bin/console debug:container fileUploader

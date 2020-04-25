@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Post;
 use App\Form\PostType;
 use App\Repository\PostRepository;
+use App\Service\FileUploader;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -32,9 +33,10 @@ class PostController extends AbstractController
     /**
      * @Route("/create", name="create")
      * @param Request $request
+     * @param FileUploader $fileUploader
      * @return Response
      */
-    public function create(Request $request)
+    public function create(Request $request, FileUploader $fileUploader)
     {
         // create a new post with title
         $post = new Post();
@@ -49,15 +51,7 @@ class PostController extends AbstractController
             /** @var UploadedFile $file */
             $file = $request->files->get('post')['attachment'];
             if($file){
-
-                // Generate Unique Filename For Image
-                $filename = md5(uniqid()) . '.' . $file->guessClientExtension();
-
-    	        // Upload File To Specific Directory Defined In Services.yaml
-                $file->move(
-                    $this->getParameter('uploads_dir'),
-                    $filename
-                );
+                $filename = $fileUploader->uploadFile($file);
 
                 $post->setImage($filename);
                 $entitymanager->persist($post);
@@ -78,12 +72,8 @@ class PostController extends AbstractController
      * @param Post $post
      * @return Response
      */
-    public function show($id, PostRepository $postRepository)
+    public function show(Post $post)
     {  
-        $post = $postRepository->findPostWithCategory($id);
-
-        dump($post);
-
         // create the show view
         return $this->render('post/show.html.twig', [
             'post' => $post,
