@@ -49,8 +49,11 @@ class PostController extends AbstractController
             /** @var UploadedFile $file */
             $file = $request->files->get('post')['attachment'];
             if($file){
+
+                // Generate Unique Filename For Image
                 $filename = md5(uniqid()) . '.' . $file->guessClientExtension();
 
+    	        // Upload File To Specific Directory Defined In Services.yaml
                 $file->move(
                     $this->getParameter('uploads_dir'),
                     $filename
@@ -60,9 +63,7 @@ class PostController extends AbstractController
                 $entitymanager->persist($post);
                 $entitymanager->flush(); 
             }
-            // $entitymanager->persist($post);
-            // $entitymanager->flush(); 
-            
+                        
             return $this->redirect($this->generateUrl('post.index'));
         }
 
