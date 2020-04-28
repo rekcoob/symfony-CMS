@@ -10,7 +10,7 @@ class Notification
 {
     public function __construct( $email, FileUploader $fileUploader)
     {
-        dump($fileUploader); die;
+        // dump($fileUploader); die;
         $this->email = $email;        
     }
 
